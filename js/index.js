@@ -1,47 +1,32 @@
-let productData;
-//endpoint
-const endpoint = "https://api.nosto.com/v1/graphql";
+//TO DO
+//If the product price has some trailing decimal zeros (.00), they will have to be removed. Any other decimals will have to be shown;
+//The products’ names should not break into two lines. If a name is too long, then it should be truncated;
+/*Define Functions*/
 
-const query = `
-query {
-    products (limit: 50) {
-    products {
-        name
-        price
-        listPrice
-        brand
-        imageUrl
-        alternateImageUrls
-        url
-        scores {
-            week {
-            views
-            buys
-                 }
-                }
-            }
-        }
-    }
-    `;
-
-//combine bestSeller with mostViews use an if to check
-function mostViews() {
-  let mostViewed = 0; //holds the most viewed product
-  for (let product of productData) {
-    let views = product.scores.week.views;
-
-    if (views > mostViewed) mostViewed = views;
+//gets products return the data from the server/api
+const getProducts = async (endpoint, query, authKey) => {
+  try {
+    const response = await fetch(endpoint, {
+      body: query,
+      method: "POST",
+      headers: {
+        "Content-Type": "application/graphql",
+        Authorization: "Basic " + btoa(":" + authKey),
+      },
+    });
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    handleError();
   }
-  return mostViewed;
-}
+};
 
-// to extract the shoe that sold the most - however, from the fetched data, they're all 0?
-function bestSeller() {
+//function that grabs the best sold item ---- which is 0?
+const getBestSeller = (items) => {
   let mostSold, mostSoldIndex;
-
-  productData.forEach((e, i) => {
+  items.forEach((e, i) => {
     //populate vars with data from the first loop
-    if ((i = 0)) {
+    if (i === 0) {
       mostSold = e.scores.week.buys;
       mostSoldIndex = i;
     }
@@ -49,80 +34,116 @@ function bestSeller() {
     else if (e.scores.week.buys > mostSold) {
       mostSold = e.scores.week.buys;
       mostSoldIndex = i;
-      console.log(mostSold, "test");
     }
   });
-  // mostSoldObject = productData[mostSoldIndex]
-  //if nothing has been sold default to product 0 --- all buy values from the database are 0??
-  //mostSold = productData[mostSoldIndex];
+  return mostSoldIndex;
+};
 
-  let spliced = productData.splice(mostSoldIndex, 1);
-  console.log(spliced);
-  //create image element
+const getMostViews = (items) => {
+  let mostViewed, indexOfMostViewed;
+
+  items.forEach((e, i) => {
+    //populate vars with data from the first loop
+    if (i === 0) {
+      mostViewed = e.scores.week.views;
+      indexOfMostViewed = i;
+    }
+    //check if mostSold has value or if current element has a higher value in buys prop
+    else if (e.scores.week.views > mostViewed) {
+      mostViewed = e.scores.week.views;
+      indexOfMostViewed = i;
+    }
+  });
+  return indexOfMostViewed;
+};
+
+const appendMostBought = (mostBoughtItem) => {
+  // create image element for most bought item
   const img = document.createElement("img");
-  //insert src for img element
-  img.src = spliced[0].imageUrl;
-
-  //put image element in the DOM
-
+  // insert src for img of most bought item
+  img.src = mostBoughtItem.imageUrl;
+  //append img to DOM
   document.getElementById("most-sold").appendChild(img);
-}
+};
 
-//   ------------
+//handle error
 
-async function runEverything() {
-  //   let products = data.data.products.products;
-  //fetch
-  async function getData() {
-    let response = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        //data type being sent
-        "Content-Type": "application/graphql",
-        Authorization:
-          "Basic " +
-          btoa(
-            ":" +
-              "N7QnHtiseaaAtartB16sQ7jUcNAm0HgsTxTnwTX08GQ85EYShd90zN3qiYiDjVsq"
-          ),
-      },
-      //tell server query string
-      body: query,
-    });
-    data = await response.json();
-    return data;
+const handleError = (error) => {
+  //create h2 element
+  const h2 = document.createElement("h2");
+  //add test to h2 element
+  h2.innerText = `Data not retrieved please refresh due to this issue: ${error}`; //usually I would redirect on errors
+  //append error to DOM
+  document.getElementById("body").appendChild(h2);
+};
+
+const endpoint = "https://api.nosto.com/v1/graphql";
+
+const authKey =
+  "N7QnHtiseaaAtartB16sQ7jUcNAm0HgsTxTnwTX08GQ85EYShd90zN3qiYiDjVsq";
+
+const query = `
+    query {
+        products (limit: 50) {
+        products {
+            name
+            price
+            listPrice
+            brand
+            imageUrl
+            alternateImageUrls
+            url
+            scores {
+                week {
+                views
+                buys
+                     }
+                    }
+                }
+            }
+        }
+    `;
+
+//Page Load
+const pageLoad = async () => {
+  const getData = await getProducts(endpoint, query, authKey);
+  if (!getData) {
+    return;
   }
+  const productArray = getData.data.products.products;
+  const spliced = productArray.splice(getBestSeller(productArray), 1)[0];
 
-  await getData();
-  productData = data.data.products.products;
-  const mostViewed = mostViews(data);
-  const mostSold = bestSeller(data);
-  console.log(productData);
-  console.log(mostSold, mostViewed);
-  console.log(data);
+  //get most viewed item
+  const mostViewedIndex = getMostViews(productArray);
+  appendMostBought(spliced);
+  console.log(mostViewedIndex, "number of views index");
+};
 
-  // const mostViewed = mostViews(data);
-  // const mostSold = bestSeller(dataGlobal);
-  // console.log(mostSold, mostViewed);
+//
+//
+//
+//
 
-  // ************SLICK AND JQUERY***************
+pageLoad();
 
-  //slick initializer
-  // $(document).ready(() => {
-  //   $(".your-class").slick({
-  //     infinite: true,
-  //     slidesToShow: 3,
-  //     slidesToScroll: 1,
-  //   });
-  // });
+// ************SLICK AND JQUERY***************
 
-  // //   console.log(data.data.products.products);
-  // let imageUrls = data.data.products.products;
+//slick initializer
+// $(document).ready(() => {
+//   $(".your-class").slick({
+//     infinite: true,
+//     slidesToShow: 3,
+//     slidesToScroll: 1,
+//   });
+// });
 
-  // for (let product of imageUrls) {
-  //   let urls = product.imageUrl;
-  //   console.log(urls);
-}
+// //   console.log(data.data.products.products);
+// let imageUrls = data.data.products.products;
+
+// for (let product of imageUrls) {
+//   let urls = product.imageUrl;
+//   console.log(urls);
+// }
 
 //console.log(imageUrls.imageUrl);
 
@@ -177,5 +198,3 @@ async function runEverything() {
 //   ],
 // });
 //}
-
-runEverything();
