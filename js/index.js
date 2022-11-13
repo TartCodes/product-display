@@ -41,7 +41,7 @@ const getBestSeller = (items) => {
 
 const getMostViews = (items) => {
   let mostViewed, indexOfMostViewed;
-
+  console.log(items, "items");
   items.forEach((e, i) => {
     //populate vars with data from the first loop
     if (i === 0) {
@@ -77,6 +77,41 @@ const handleError = (error) => {
   document.getElementById("body").appendChild(h2);
 };
 
+// loop through data for brand, name,
+const getNeededData = (getNeededData) => {
+  getNeededData.forEach((e, i) => {
+    imageUrls = e.imageUrl;
+    brands = e.brand;
+    price = e.listPrice;
+    console.log(imageUrls, "all images");
+    console.log(brands, "all brands");
+    console.log(price, "prices");
+  });
+};
+//get the brand names
+// const getBrandNames = (brandNames) => {
+//   brandNames.forEach((e, i) => {
+//     brands = e.brand;
+//     console.log(brands, "brand names");
+//   });
+// };
+
+// //get products name
+// const getProductName = (productName) => {
+//   productName.forEach((e, i) => {
+//     productsName = e.name[i].name;
+//     console.log(productName, "name of product");
+//   });
+// };
+
+// //get the price
+// const getPrices = (prices) => {
+//   prices.forEach((e, i) => {
+//     price = e.listPrice;
+//     console.log(price, "list prices");
+//   });
+// };
+
 const endpoint = "https://api.nosto.com/v1/graphql";
 
 const authKey =
@@ -107,6 +142,7 @@ const query = `
 //Page Load
 const pageLoad = async () => {
   const getData = await getProducts(endpoint, query, authKey);
+  console.log(getData);
   if (!getData) {
     return;
   }
@@ -117,6 +153,15 @@ const pageLoad = async () => {
   const mostViewedIndex = getMostViews(productArray);
   appendMostBought(spliced);
   console.log(mostViewedIndex, "number of views index");
+  //append data into the carousel
+
+  $(".all-products").append(
+    `<div class="">
+    <img src="${getNeededData(productArray)}" alt="">
+  
+    </div>
+    `
+  );
 };
 
 //
@@ -124,21 +169,18 @@ const pageLoad = async () => {
 //
 //
 
-pageLoad();
-
 // ************SLICK AND JQUERY***************
 
-//slick initializer
-// $(document).ready(() => {
-//   $(".your-class").slick({
-//     infinite: true,
-//     slidesToShow: 3,
-//     slidesToScroll: 1,
-//   });
-// });
+// slick initializer
+$(document).ready(() => {
+  $(".all-products").slick({
+    infinite: true,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+  });
+});
 
-// //   console.log(data.data.products.products);
-// let imageUrls = data.data.products.products;
+//   console.log(data.data.products.products);
 
 // for (let product of imageUrls) {
 //   let urls = product.imageUrl;
@@ -198,3 +240,4 @@ pageLoad();
 //   ],
 // });
 //}
+pageLoad();
