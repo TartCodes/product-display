@@ -39,6 +39,7 @@ const getBestSeller = (items) => {
   return mostSoldIndex;
 };
 
+//function to get most views
 const getMostViews = (items) => {
   let mostViewed, indexOfMostViewed;
   console.log(items, "items");
@@ -57,6 +58,7 @@ const getMostViews = (items) => {
   return indexOfMostViewed;
 };
 
+//append the most bought item to the dom
 const appendMostBought = (mostBoughtItem) => {
   // create image element for most bought item
   const img = document.createElement("img");
@@ -76,41 +78,6 @@ const handleError = (error) => {
   //append error to DOM
   document.getElementById("body").appendChild(h2);
 };
-
-// loop through data for brand, name,
-const getNeededData = (getNeededData) => {
-  getNeededData.forEach((e, i) => {
-    imageUrls = e.imageUrl;
-    brands = e.brand;
-    price = e.listPrice;
-    console.log(imageUrls, "all images");
-    console.log(brands, "all brands");
-    console.log(price, "prices");
-  });
-};
-//get the brand names
-// const getBrandNames = (brandNames) => {
-//   brandNames.forEach((e, i) => {
-//     brands = e.brand;
-//     console.log(brands, "brand names");
-//   });
-// };
-
-// //get products name
-// const getProductName = (productName) => {
-//   productName.forEach((e, i) => {
-//     productsName = e.name[i].name;
-//     console.log(productName, "name of product");
-//   });
-// };
-
-// //get the price
-// const getPrices = (prices) => {
-//   prices.forEach((e, i) => {
-//     price = e.listPrice;
-//     console.log(price, "list prices");
-//   });
-// };
 
 const endpoint = "https://api.nosto.com/v1/graphql";
 
@@ -141,11 +108,14 @@ const query = `
 
 //Page Load
 const pageLoad = async () => {
+  //fetch
   const getData = await getProducts(endpoint, query, authKey);
   console.log(getData);
+  //some error handling
   if (!getData) {
     return;
   }
+  //find the most sold item
   const productArray = getData.data.products.products;
   const spliced = productArray.splice(getBestSeller(productArray), 1)[0];
 
@@ -153,91 +123,66 @@ const pageLoad = async () => {
   const mostViewedIndex = getMostViews(productArray);
   appendMostBought(spliced);
   console.log(mostViewedIndex, "number of views index");
-  //append data into the carousel
 
-  $(".all-products").append(
-    `<div class="">
-    <img src="${getNeededData(productArray)}" alt="">
-  
+  $(".all-products").slick(HomeSliderSetting());
+  $.each(productArray, function () {
+    const product = `<div class="wrapper"> <img alt="" src = ${this.imageUrl}/> 
+    <div>
+    <span>${this.brands}</span>
     </div>
-    `
-  );
+    <div>
+    <span>${this.names}</span>
+    </div>
+    <div>
+    <span>${this.price}</span>
+    </div>
+    </div>`;
+    $(".all-products").slick("slickAdd", product);
+  });
 };
-
-//
-//
-//
-//
 
 // ************SLICK AND JQUERY***************
 
 // slick initializer
-$(document).ready(() => {
-  $(".all-products").slick({
+const addSlick = () => {
+  $(document).ready(() => {
+    $(".all-products").slick({});
+  });
+};
+
+function HomeSliderSetting() {
+  return {
+    dots: true,
     infinite: true,
+    speed: 300,
     slidesToShow: 3,
     slidesToScroll: 1,
-  });
-});
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+}
 
-//   console.log(data.data.products.products);
-
-// for (let product of imageUrls) {
-//   let urls = product.imageUrl;
-//   console.log(urls);
-// }
-
-//console.log(imageUrls.imageUrl);
-
-//   data.products.products[0].url
-
-//   data to be pulled and placed into the dom, imgs, price, alt img, name, brand
-
-// let image = [
-//   `<div><img class="selectedImage" src=`,
-//   urls,
-//   '" title="',
-//   escape(data),
-//   '"/></div>',
-// ].join("");
-
-// $(".your-class").slick("slickAdd", image);
-
-// //slick default styling
-// $(".responsive").slick({
-//   dots: true,
-//   infinite: false,
-//   speed: 300,
-//   slidesToShow: 4,
-//   slidesToScroll: 4,
-//   responsive: [
-//     {
-//       breakpoint: 1024,
-//       settings: {
-//         slidesToShow: 3,
-//         slidesToScroll: 3,
-//         infinite: true,
-//         dots: true,
-//       },
-//     },
-//     {
-//       breakpoint: 600,
-//       settings: {
-//         slidesToShow: 2,
-//         slidesToScroll: 2,
-//       },
-//     },
-//     {
-//       breakpoint: 480,
-//       settings: {
-//         slidesToShow: 1,
-//         slidesToScroll: 1,
-//       },
-//     },
-//     // You can unslick at a given breakpoint now by adding:
-//     // settings: "unslick"
-//     // instead of a settings object
-//   ],
-// });
-//}
 pageLoad();
