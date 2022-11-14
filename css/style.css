@@ -1,4 +1,351 @@
-/* Custom Styling */
-/* img {
+/* RESET */
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+/* img, */
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Font Family */
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: "Noto Sans", sans-serif;
+  font-size: 12px;
+  background-color: #18132c;
+  align-items: center;
+  column-gap: 5vw;
+  margin: 2%;
+}
+
+/* Flex Body and other containers */
+body,
+.main-section,
+.all-products,
+.most-sold-container,
+#most-sold {
   display: flex;
-} */
+}
+
+/* Responsive Img */
+
+#most-sold img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 150px;
+}
+
+/* Most Sold */
+
+.most-sold-container {
+  width: 33%;
+}
+
+#most-sold {
+  flex-direction: column-reverse;
+  text-align: center;
+  align-items: center;
+}
+
+#best-text {
+  position: relative;
+  top: 10%;
+  border: 1px solid #ff1ba3;
+  border-radius: 10px;
+  background-color: #ff1ba3;
+  padding: 2px 0px;
+  width: 55%;
+  font-size: 2rem;
+}
+
+span:first-of-type {
+  font-weight: 700;
+  font-size: 1.75rem;
+}
+
+span:nth-of-type(2) {
+  font-size: 1.5rem;
+}
+
+span:last-of-type {
+  font-weight: 700;
+  border: 1px solid #ff1ba3;
+  border-radius: 10px;
+  background-color: #ff1ba3;
+  width: 55%;
+}
+
+/* All Products and Caro */
+.all-products {
+  width: 40vw;
+  display: flex;
+  flex-direction: column;
+  align-self: flex-end;
+}
+
+p {
+  text-align: center;
+  font-size: 1.5em;
+  padding-bottom: 10px;
+  color: white;
+}
+
+/* cell style */
+.carousel-cell {
+  padding-left: 10px;
+  width: 33.333%;
+  padding: 1rem;
+  padding-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/* cell images */
+.carousel-cell img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.product-info {
+  row-gap: 10px;
+  display: flex;
+  font-size: 2rem;
+  color: white;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+}
+
+span {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* Arrows */
+
+.flickity-button {
+  background: #333 !important;
+}
+.flickity-button:hover {
+  background: #ff1ba3 !important;
+}
+
+.flickity-prev-next-button {
+  top: 60% !important;
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 5px !important;
+}
+/* icon color */
+.flickity-button-icon {
+  fill: white !important;
+}
+/* position outside */
+.flickity-prev-next-button.previous {
+  left: -40px !important;
+}
+.flickity-prev-next-button.next {
+  right: -40px !important;
+}
+
+/* Media Q's */
+
+@media screen and (max-width: 700px) {
+  .carousel-cell {
+    width: 33.33%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  body {
+    flex-direction: column;
+    align-items: center;
+    row-gap: 10vh;
+  }
+
+  .most-sold-container {
+    width: 65vw;
+    /* margin-top: 2%; */
+  }
+
+  .carousel-cell {
+    width: 33.33%;
+  }
+
+  #best-text {
+    font-size: 1.5rem;
+    width: 100%;
+  }
+
+  .all-products {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .product-info {
+    font-size: 1em;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  body {
+    flex-direction: column;
+    align-items: center;
+    row-gap: 10vh;
+  }
+
+  .most-sold-container {
+    width: 65vw;
+    /* margin-top: 2%; */
+  }
+
+  #best-text {
+    font-size: 1.5rem;
+    width: 100%;
+  }
+
+  p {
+    text-align: center;
+    font-size: 1.5em;
+    padding-bottom: 10px;
+    color: white;
+  }
+
+  .section-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .product-info {
+    font-size: 1em;
+  }
+}

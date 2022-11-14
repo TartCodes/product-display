@@ -1,6 +1,3 @@
-//TO DO
-//If the product price has some trailing decimal zeros (.00), they will have to be removed. Any other decimals will have to be shown;
-//The products’ names should not break into two lines. If a name is too long, then it should be truncated;
 /*Define Functions*/
 
 //gets products return the data from the server/api
@@ -63,16 +60,16 @@ const appendMostBought = (mostBoughtItem) => {
   const img = document.createElement("img");
   // insert src for img of most bought item
   img.src = mostBoughtItem.imageUrl;
-  img.id = "most-sold-pic"
+  img.id = "most-sold-pic";
   //append img to DOM
   document.getElementById("most-sold").appendChild(img);
-  const div = document.createElement("div")
-  div.id = "best-text" //<div class="best-text">BEST SELLER!</div>
-  div.innerHTML = 'BEST SELLER!'      
-  document.getElementById('most-sold').appendChild(div)
-  //if link is dead
+  const div = document.createElement("div");
+  div.id = "best-text"; //<div class="best-text">BEST SELLER!</div>
+  div.innerHTML = "BEST SELLER THIS WEEK!";
+  document.getElementById("most-sold").appendChild(div);
+  // if link is dead
   $("img").on("error", function () {
-    $(this).attr("src", "./testimg/error.png");
+    $(this).attr("src", "./testimg/err.png");
   });
 };
 
@@ -133,72 +130,90 @@ const pageLoad = async () => {
   appendMostBought(spliced);
   console.log(mostViewedIndex, "number of views index");
 
-  $(".all-products").slick(HomeSliderSetting());
   $.each(productArray, function () {
-    const product = `<div class="wrapper"> 
-      <a target="_blank" href= "${this.url}"> 
-        <img alt="" 
-        src="${this.imageUrl}"
-        onmouseover="this.src='${this.alternateImageUrls[0] || this.imageUrl}'" 
-        onmouseout="this.src='${this.imageUrl}'"
-        onerror="this.src='./testimg/error.png'"/>     
-      </a>
-        <div class="product-info">
-          <span>${this.brand}</span>    
-          <span>${this.name}</span>    
-          <span>€${this.price.toString().replace(/\.00$/, "")}</span>
-        </div>
-    </div>`;     
-    $(".all-products").slick("slickAdd", product);
-  }); 
+    const product = `<div class="carousel-cell">
+        <a target="_blank" href= "${this.url}">
+          <img alt=""
+          id="mouseTarget"
+          src="${this.imageUrl}"
+          onmouseover="this.src='${
+            this.alternateImageUrls[0]
+              ? this.alternateImageUrls[0]
+              : this.imageUrl
+          }'"
+          onmouseout="this.src='${this.imageUrl}'"
+          onerror="this.src='./testimg/err.png'"/>
+        </a>
+           <div class="product-info">
+           
+            <span>${this.brand}</span>
+            
+            
+            <span>${this.name}</span>
+            
+            
+            <span>€${this.price}</span>
+            
+         </div>
+      </div>`;
+    $(".all-products").append(product);
+  });
+
+  (function ($) {
+    $(document).ready(function () {
+      $(".all-products").flickityResponsive({
+        cellAlign: "left",
+        wraparound: true,
+        imagesLoaded: true,
+        draggable: false,
+        pageDots: false,
+        responsive: [
+          {
+            breakpoint: 480,
+            settings: {
+              prevNextButtons: false,
+              draggable: true,
+              freeScroll: true,
+            },
+          },
+        ],
+        responsive: [
+          {
+            breakpoint: 600,
+            settings: {
+              prevNextButtons: false,
+              draggable: true,
+              freeScroll: true,
+            },
+          },
+        ],
+      });
+    });
+  })(jQuery);
 };
 
-//
-//
-//
+// .toString().replace(/\.00$/, "")
+// <span>€${this.price}</span>
+//  this.alternateImageUrls[0] || this.imageUrl
 //
 
-// ************SLICK *********
-
-
-
-function HomeSliderSetting() {
-  return {
-    infinite: true,
-    speed: 300,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    arrows: true,
-    draggable: false,    
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-          infinite: true,
-          arrows: true,
-          draggable: false,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          arrows: false
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          arrows: false
-        },
-      },
-    ],
-  };
-}
+// $(".all-products").slick(HomeSliderSetting());
+// $.each(productArray, function () {
+//   const product = `<div class="wrapper">
+//     <a target="_blank" href= "${this.url}">
+//       <img alt=""
+//       src="${this.imageUrl}"
+//       onmouseover="this.src='${this.alternateImageUrls[0] || this.imageUrl}'"
+//       onmouseout="this.src='${this.imageUrl}'"
+//       onerror="this.src='./testimg/error.png'"/>
+//     </a>
+//       <div class="product-info">
+//         <span>${this.brand}</span>
+//         <span>${this.name}</span>
+//         <span>€${this.price.toString().replace(/\.00$/, "")}</span>
+//       </div>
+//   </div>`;
+//   $(".all-products").slick("slickAdd", product);
+// });
 
 pageLoad();
