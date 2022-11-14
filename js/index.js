@@ -23,15 +23,16 @@ const getProducts = async (endpoint, query, authKey) => {
 
 //function that grabs the best sold item ---- which is 0?
 const getBestSeller = (items) => {
-  let mostSold, mostSoldIndex;
+  let mostSold,
+    mostSoldIndex = 1;
   items.forEach((e, i) => {
     //populate vars with data from the first loop
-    if (i === 0) {
+    if (!i) {
       mostSold = e.scores.week.buys;
       mostSoldIndex = i;
     }
     //check if mostSold has value or if current element has a higher value in buys prop
-    else if (e.scores.week.buys > mostSold) {
+    if (e.scores.week.buys > mostSold) {
       mostSold = e.scores.week.buys;
       mostSoldIndex = i;
     }
@@ -39,11 +40,10 @@ const getBestSeller = (items) => {
   return mostSoldIndex;
 };
 
-//function to get most views
 const getMostViews = (items) => {
   let mostViewed, indexOfMostViewed;
   console.log(items, "items");
-  items.forEach((e, i) => {
+  items.reverse().forEach((e, i) => {
     //populate vars with data from the first loop
     if (i === 0) {
       mostViewed = e.scores.week.views;
@@ -58,17 +58,25 @@ const getMostViews = (items) => {
   return indexOfMostViewed;
 };
 
-//append the most bought item to the dom
 const appendMostBought = (mostBoughtItem) => {
   // create image element for most bought item
   const img = document.createElement("img");
   // insert src for img of most bought item
   img.src = mostBoughtItem.imageUrl;
+  img.id = "most-sold-pic"
   //append img to DOM
   document.getElementById("most-sold").appendChild(img);
+  const div = document.createElement("div")
+  div.id = "best-text" //<div class="best-text">BEST SELLER!</div>
+  div.innerHTML = 'BEST SELLER!'      
+  document.getElementById('most-sold').appendChild(div)
+  //if link is dead
+  $("img").on("error", function () {
+    $(this).attr("src", "./testimg/error.png");
+  });
 };
 
-//handle error
+//handle errors
 
 const handleError = (error) => {
   //create h2 element
@@ -115,6 +123,7 @@ const pageLoad = async () => {
   if (!getData) {
     return;
   }
+
   //find the most sold item
   const productArray = getData.data.products.products;
   const spliced = productArray.splice(getBestSeller(productArray), 1)[0];
@@ -126,58 +135,61 @@ const pageLoad = async () => {
 
   $(".all-products").slick(HomeSliderSetting());
   $.each(productArray, function () {
-    const product = `<div class="wrapper"> <img alt="" src = ${this.imageUrl}/> 
-    <div>
-    <span>${this.brands}</span>
-    </div>
-    <div>
-    <span>${this.names}</span>
-    </div>
-    <div>
-    <span>${this.price}</span>
-    </div>
+    const product = `<div class="wrapper"> 
+      <a target="_blank" href= "${this.url}"> 
+        <img alt="" 
+        src="${this.imageUrl}"
+        onmouseover="this.src='${this.alternateImageUrls[0] || this.imageUrl}'" 
+        onmouseout="this.src='${this.imageUrl}'"
+        onerror="this.src='./testimg/error.png'"/>     
+      </a>
+        <div class="product-info">
+          <span>${this.brand}</span>    
+          <span>${this.name}</span>    
+          <span>€${this.price.toString().replace(/\.00$/, "")}</span>
+        </div>
     </div>`;
     $(".all-products").slick("slickAdd", product);
   });
 };
 
-// ************SLICK AND JQUERY***************
+//
+//
+//
+//
 
-// slick initializer
-const addSlick = () => {
-  $(document).ready(() => {
-    $(".all-products").slick({});
-  });
-};
+// ************SLICK *********
 
 function HomeSliderSetting() {
   return {
-    dots: true,
     infinite: true,
     speed: 300,
     slidesToShow: 3,
     slidesToScroll: 1,
+    arrows: true,
+    draggable: false,
     responsive: [
       {
         breakpoint: 1024,
         settings: {
           slidesToShow: 3,
-          slidesToScroll: 3,
+          slidesToScroll: 1,
           infinite: true,
-          dots: true,
+          arrows: true,
+          draggable: false,
         },
       },
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
+          slidesToShow: 3,
+          slidesToScroll: 1,
         },
       },
       {
         breakpoint: 480,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 3,
           slidesToScroll: 1,
         },
       },

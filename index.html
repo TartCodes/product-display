@@ -6,13 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nosto Take Home</title>
     <link rel="stylesheet" type="text/css" href="slick/slick.css" />
-    <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- <link rel="stylesheet" type="text/css" href="slick/slick-theme.css" /> -->
   </head>
   <body id="body">
-    <h1>AHHHH</h1>
-    <div id="most-sold"></div>
-    <!-- caro -->
-    <div class="all-products" id="testing"></div>
+    <section class="main-section">
+      <div id="most-sold">
+        <div class="filler"></div>
+      </div>
+
+      <!-- caro -->
+      <div class="slider-container">
+        <div class="all-products"></div>
+      </div>
+    </section>
+    <!--  -->
     <script
       type="text/javascript"
       src="//code.jquery.com/jquery-1.11.0.min.js"
@@ -22,6 +35,33 @@
       src="//code.jquery.com/jquery-migrate-1.2.1.min.js"
     ></script>
     <script type="text/javascript" src="slick/slick.min.js"></script>
+
+
+
+    <!-- <div class="wrapper"> 
+      <a target="_blank" href= "${this.url}"> 
+        <img alt="" 
+        src="${this.imageUrl}"
+        onmouseover="this.src='${this.alternateImageUrls[0] || this.imageUrl}'" 
+        onmouseout="this.src='${this.imageUrl}'"
+        onerror="this.src='./testimg/error.png'"        
+      />
+        <div class="product-info">
+          <span>${this.brand}</span>    
+          <span>${this.name}</span>    
+          <span>€${this.price.toString().replace(/\.00$/, "")}</span>
+        </div>
+    </div>`; -->
+
+
+
+
+
+
+
+
+
+
   </body>
   <script type="text/javascript" src="js/index.js"></script>
 </html>
