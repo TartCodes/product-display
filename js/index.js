@@ -148,9 +148,9 @@ const pageLoad = async () => {
           <span>${this.name}</span>    
           <span>€${this.price.toString().replace(/\.00$/, "")}</span>
         </div>
-    </div>`;
+    </div>`;     
     $(".all-products").slick("slickAdd", product);
-  });
+  }); 
 };
 
 //
@@ -160,6 +160,8 @@ const pageLoad = async () => {
 
 // ************SLICK *********
 
+
+
 function HomeSliderSetting() {
   return {
     infinite: true,
@@ -167,7 +169,7 @@ function HomeSliderSetting() {
     slidesToShow: 3,
     slidesToScroll: 1,
     arrows: true,
-    draggable: false,
+    draggable: false,    
     responsive: [
       {
         breakpoint: 1024,
@@ -183,14 +185,16 @@ function HomeSliderSetting() {
         breakpoint: 600,
         settings: {
           slidesToShow: 3,
-          slidesToScroll: 1,
+          slidesToScroll: 3,
+          arrows: false
         },
       },
       {
         breakpoint: 480,
         settings: {
           slidesToShow: 3,
-          slidesToScroll: 1,
+          slidesToScroll: 3,
+          arrows: false
         },
       },
     ],

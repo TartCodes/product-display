@@ -164,6 +164,7 @@ table {
   display: none;
 }
 
+
 /* CUSTOM */
 
 .wrapper {
@@ -204,12 +205,27 @@ span:last-of-type {
   font-weight: 700;
 }
 
+span:first-of-type {
+    border: 1px solid #FF1BA3;
+    border-radius: 5px;
+    width: 10rem;
+    text-align: center;
+    background-color: #FF1BA3;
+    font-weight: 700;
+  
+}
+
 #best-text {
   z-index: 1;
   position: absolute;
   top: 27%;
-  left: 40%;
-  background: red;
+  left: 33%;
+  background-color: #FF1BA3;
+  border: 1px solid #FF1BA3;
+  border-radius: 5px;
+  width: 9vw;
+  text-align: center;
+  font-weight: 700;
 }
 
 #most-sold {
@@ -233,10 +249,91 @@ span:last-of-type {
   padding-left: 100px;
 }
 
+
+/* change */
 .filler {
-  background-image: url('./testimg/error.png');
+  background-image: './testimg/error.png'
 }
 
+/* ---- ARROWS ---- */
+
+/* button {
+  appearance: none;
+}
+
+@font-face
+{
+    font-family: 'slick';
+    font-weight: normal;
+    font-style: normal;
+
+    src: url('./fonts/slick.eot');
+    src: url('./fonts/slick.eot?#iefix') format('embedded-opentype'), url('./fonts/slick.woff') format('woff'), url('./fonts/slick.ttf') format('truetype'), url('./fonts/slick.svg#slick') format('svg');
+}
+
+.slick-next {
+  position: relative;
+    left: 61.85%;
+    bottom: -40px;
+    display: inline-flex;
+    width: 5%;
+    justify-content: center;
+    -webkit-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    color: transparent;
+    border: none;
+    outline: none;
+    background: transparent;
+  
+}
+.slick-next:before
+{
+    content: '→';
+}
+[dir='rtl'] .slick-next:before
+{
+    content: '←';
+}
+
+.slick-prev {
+  position: relative;
+  left: 35.5%;
+  top: 26.55rem;
+  display: inline-flex;
+  width: 5%;
+  justify-content: center;
+  -webkit-transform: translate(0, -50%);
+  -ms-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+  color: transparent;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+.slick-prev:before
+{
+    content: '←';
+}
+[dir='rtl'] .slick-prev:before
+{
+    content: '→';
+}
+
+.slick-prev:before,
+.slick-next:before
+{
+    font-family: 'slick';
+    font-size: 85px;
+    line-height: 1;
+
+    opacity: .75;
+    color: black;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+} */
 
 /* Media Qs */
 
