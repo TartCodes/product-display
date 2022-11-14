@@ -179,12 +179,6 @@ body,
   font-size: 2rem;
 }
 
-/* span {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-} */
-
 /* All Products and Caro */
 .all-products {
   width: 40vw;
@@ -196,6 +190,11 @@ body,
 .other-products {
   border-bottom: 3px solid #ff1ba3;
   border-radius: 5px;
+}
+
+.section-wrapper {
+  display: flex;
+  flex-direction: column;
 }
 
 p {
@@ -215,6 +214,7 @@ p {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  /* min-height: 100%; */
 }
 
 /* cell images */
@@ -263,6 +263,28 @@ span:last-of-type {
   border-radius: 10px;
   background-color: #ff1ba3;
   width: 55%;
+}
+
+/* Tooltip Preview */
+
+.tooltiptext {
+  visibility: hidden;
+  width: fit-content;
+
+  color: white;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  font-family: "Noto Sans", sans-serif;
+  position: absolute;
+  top: -6px;
+  font-size: 0.5em;
+  mix-blend-mode: multiply;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }
 
 /* Arrows */

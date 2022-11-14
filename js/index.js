@@ -18,10 +18,10 @@ const getProducts = async (endpoint, query, authKey) => {
   }
 };
 
-//function that grabs the best sold item ---- which is 0?
+//function that grabs the best sold item
 const getBestSeller = (items) => {
   let mostSold,
-    mostSoldIndex = 1;
+    mostSoldIndex = 0;
   items.forEach((e, i) => {
     //populate vars with data from the first loop
     if (!i) {
@@ -40,7 +40,7 @@ const getBestSeller = (items) => {
 const getMostViews = (items) => {
   let mostViewed, indexOfMostViewed;
   console.log(items, "items");
-  items.reverse().forEach((e, i) => {
+  items.forEach((e, i) => {
     //populate vars with data from the first loop
     if (i === 0) {
       mostViewed = e.scores.week.views;
@@ -51,6 +51,7 @@ const getMostViews = (items) => {
       mostViewed = e.scores.week.views;
       indexOfMostViewed = i;
     }
+    // e[indexOfMostViewed].mostViewed = true;
   });
   return indexOfMostViewed;
 };
@@ -69,7 +70,7 @@ const appendMostBought = (mostBoughtItem) => {
   document.getElementById("most-sold").appendChild(div);
   // if link is dead
   $("img").on("error", function () {
-    $(this).attr("src", "./testimg/err.png");
+    $(this).attr("src", "./testimg/error.png");
   });
 };
 
@@ -134,7 +135,7 @@ const pageLoad = async () => {
     const product = `<div class="carousel-cell">
         <a target="_blank" href= "${this.url}">
           <img alt=""
-          id="mouseTarget"
+          id=""
           src="${this.imageUrl}"
           onmouseover="this.src='${
             this.alternateImageUrls[0]
@@ -142,17 +143,20 @@ const pageLoad = async () => {
               : this.imageUrl
           }'"
           onmouseout="this.src='${this.imageUrl}'"
-          onerror="this.src='./testimg/err.png'"/>
+          onerror="this.src='./testimg/error.png'"/>
         </a>
-           <div class="product-info">
+           <div class="product-info tooltip">
            
-            <span>${this.brand}</span>
+            <span>${this.brand}</span>  
             
             
             <span>${this.name}</span>
+            <span class="tooltiptext">${this.name}</span>
             
             
             <span>€${this.price}</span>
+            
+            
             
          </div>
       </div>`;
@@ -167,6 +171,7 @@ const pageLoad = async () => {
         imagesLoaded: true,
         draggable: false,
         pageDots: false,
+        // adaptiveHeight: false,
         responsive: [
           {
             breakpoint: 480,
