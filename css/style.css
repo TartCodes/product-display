@@ -179,23 +179,11 @@ body,
   font-size: 2rem;
 }
 
-span:first-of-type {
-  font-weight: 700;
-  font-size: 1.75rem;
-}
-
-span:nth-of-type(2) {
-  font-size: 1.5rem;
-  font-weight: lighter;
-}
-
-span:last-of-type {
-  font-weight: 700;
-  border: 1px solid #ff1ba3;
-  border-radius: 10px;
-  background-color: #ff1ba3;
-  width: 55%;
-}
+/* span {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+} */
 
 /* All Products and Caro */
 .all-products {
@@ -206,7 +194,7 @@ span:last-of-type {
 }
 
 .other-products {
-  border-bottom: 1px solid #ff1ba3;
+  border-bottom: 3px solid #ff1ba3;
   border-radius: 5px;
 }
 
@@ -248,10 +236,33 @@ p {
   min-width: 0;
 }
 
-span {
+span:first-of-type {
+  font-weight: 700;
+  font-size: 1.75rem;
+  height: 20px;
+  align-self: center;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  width: 100%;
+}
+
+span:nth-of-type(2) {
+  font-size: 1.5rem;
+  font-weight: lighter;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+  height: 20px;
+}
+
+span:last-of-type {
+  font-weight: 700;
+  border: 1px solid #ff1ba3;
+  border-radius: 10px;
+  background-color: #ff1ba3;
+  width: 55%;
 }
 
 /* Arrows */
@@ -330,7 +341,6 @@ span {
 
   .most-sold-container {
     width: 65vw;
-    /* margin-top: 2%; */
   }
 
   #best-text {
@@ -353,5 +363,9 @@ span {
 
   .product-info {
     font-size: 1em;
+  }
+
+  span:last-of-type {
+    font-size: 1.25em;
   }
 }

@@ -163,7 +163,7 @@ const pageLoad = async () => {
     $(document).ready(function () {
       $(".all-products").flickityResponsive({
         cellAlign: "left",
-        wraparound: true,
+        wrapAround: true,
         imagesLoaded: true,
         draggable: false,
         pageDots: false,
@@ -174,6 +174,7 @@ const pageLoad = async () => {
               prevNextButtons: false,
               draggable: true,
               freeScroll: true,
+              wrapAround: true,
             },
           },
         ],
@@ -184,6 +185,7 @@ const pageLoad = async () => {
               prevNextButtons: false,
               draggable: true,
               freeScroll: true,
+              wrapAround: true,
             },
           },
         ],
