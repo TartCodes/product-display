@@ -56,14 +56,18 @@ class Page {
       mostBought = 0,
       mostViewedIndex = 0,
       mostBoughtIndex = 0;
+
     //loop each item in the array to replace values of vars tracking highest values
     this.productArray.forEach((e, i) => {
-      if (e.scores.week.views > mostViewed) {
-        mostViewed = e.scores.week.views;
+      let currentViews = e.scores.week.views,
+        currentBuys = e.scores.week.buys;
+
+      if (currentViews > mostViewed) {
+        mostViewed = currentViews;
         mostViewedIndex = i;
       }
-      if (e.scores.week.buys > mostBought) {
-        mostBought = e.scores.week.buys;
+      if (currentBuys > mostBought) {
+        mostBought = currentBuys;
         mostBoughtIndex = i;
       }
     });
