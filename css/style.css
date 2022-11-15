@@ -223,15 +223,16 @@ p {
 .most-viewed {
   z-index: 1;
   position: absolute;
-  color: #edf7f5;
+  color: #18132c;
   font-size: 2rem;
   top: 17px;
+  font-weight: bolder;
   /* display: none; */
   border: 1px solid #18132c;
   border-radius: 5px;
   width: 10vw;
   text-align: center;
-  background-color: #18132c;
+  background-color: #ffe9da;
 }
 
 /* cell images */
@@ -406,5 +407,11 @@ span:last-of-type {
 
   span:last-of-type {
     font-size: 1.25em;
+  }
+
+  .most-viewed {
+    font-size: 1rem;
+    top: 10px;
+    width: 25vw;
   }
 }
