@@ -162,6 +162,12 @@ const loadPage = async () => {
         pageDots: false,
         responsive: [
           {
+            breakpoint: 300,
+            prevNextButtons: false,
+          },
+        ],
+        responsive: [
+          {
             breakpoint: 480,
             settings: {
               prevNextButtons: false,
@@ -175,10 +181,18 @@ const loadPage = async () => {
           {
             breakpoint: 600,
             settings: {
-              prevNextButtons: false,
+              prevNextButtons: true,
               draggable: true,
               freeScroll: true,
               wrapAround: true,
+            },
+          },
+        ],
+        responsive: [
+          {
+            breakpoint: 1300,
+            settings: {
+              draggable: true,
             },
           },
         ],

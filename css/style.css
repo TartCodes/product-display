@@ -335,17 +335,56 @@ span:last-of-type {
 
 /* Media Q's */
 
-@media screen and (max-width: 700px) {
-  .carousel-cell {
-    width: 33.33%;
-  }
-}
-
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 1300px) {
   body {
     flex-direction: column;
     align-items: center;
-    row-gap: 10vh;
+    row-gap: 5vh;
+  }
+
+  .most-sold-container {
+    width: 60vw;
+    /* margin-top: 2%; */
+  }
+
+  .carousel-cell {
+    width: 33.33%;
+  }
+
+  #best-text {
+    font-size: 2rem;
+    width: 100%;
+  }
+
+  .all-products {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+  }
+
+  .product-info {
+    font-size: 1em;
+  }
+
+  .section-wrapper {
+    width: 80%;
+    margin-bottom: 5px;
+    align-self: center;
+  }
+
+  .most-viewed {
+    font-size: 1.25rem;
+    top: 15px;
+    width: 20vw;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  body {
+    flex-direction: column;
+    align-items: center;
+    row-gap: 5vh;
   }
 
   .most-sold-container {
@@ -370,6 +409,60 @@ span:last-of-type {
 
   .product-info {
     font-size: 1em;
+  }
+
+  .section-wrapper {
+    width: 80%;
+    margin-bottom: 5px;
+  }
+
+  .most-viewed {
+    font-size: 1rem;
+    top: 15px;
+    width: 25vw;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  body {
+    flex-direction: column;
+    align-items: center;
+    row-gap: 5vh;
+  }
+
+  .most-sold-container {
+    width: 65vw;
+    /* margin-top: 2%; */
+  }
+
+  .carousel-cell {
+    width: 33.33%;
+  }
+
+  #best-text {
+    font-size: 1.5rem;
+    width: 100%;
+  }
+
+  .all-products {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .product-info {
+    font-size: 1em;
+  }
+
+  .section-wrapper {
+    width: 80%;
+    margin-bottom: 5px;
+  }
+
+  .most-viewed {
+    font-size: 1rem;
+    top: 15px;
+    width: 25vw;
   }
 }
 
@@ -409,6 +502,7 @@ span:last-of-type {
   span:last-of-type {
     font-size: 1.25em;
     width: 80%;
+    min-width: fit-content;
   }
 
   .most-viewed {
