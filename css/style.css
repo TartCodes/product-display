@@ -137,6 +137,7 @@ body {
   align-items: center;
   column-gap: 5vw;
   margin: 2%;
+  justify-content: center;
 }
 
 /* Flex Body and other containers */
@@ -280,7 +281,7 @@ span:last-of-type {
   border: 1px solid #ff1ba3;
   border-radius: 10px;
   background-color: #ff1ba3;
-  width: 55%;
+  width: 60%;
 }
 
 /* Tooltip Preview */
@@ -407,6 +408,7 @@ span:last-of-type {
 
   span:last-of-type {
     font-size: 1.25em;
+    width: 80%;
   }
 
   .most-viewed {
