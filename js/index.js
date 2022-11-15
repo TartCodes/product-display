@@ -18,7 +18,31 @@ const getProducts = async (endpoint, query, authKey) => {
   }
 };
 
-//function that grabs the best sold item
+//find the item with the most views
+const getMostViews = (items) => {
+  let mostViewed, indexOfMostViewed, mostViewedItem;
+
+  // console.log(items, "items");
+  items.forEach((e, i) => {
+    //populate vars with data from the first loop
+
+    if (i === 0) {
+      mostViewed = e.scores.week.views;
+
+      return (indexOfMostViewed = i);
+    }
+    //check if mostSold has value or if current element has a higher value in buys prop
+    if (e.scores.week.views > mostViewed) {
+      mostViewed = e.scores.week.views;
+
+      indexOfMostViewed = i;
+      mostViewedItem = e;
+    }
+  });
+  return indexOfMostViewed;
+};
+
+//grabs the most bought/sold item
 const getBestSeller = (items) => {
   let mostSold,
     mostSoldIndex = 0;
@@ -37,25 +61,7 @@ const getBestSeller = (items) => {
   return mostSoldIndex;
 };
 
-const getMostViews = (items) => {
-  let mostViewed, indexOfMostViewed;
-  console.log(items, "items");
-  items.forEach((e, i) => {
-    //populate vars with data from the first loop
-    if (i === 0) {
-      mostViewed = e.scores.week.views;
-      indexOfMostViewed = i;
-    }
-    //check if mostSold has value or if current element has a higher value in buys prop
-    else if (e.scores.week.views > mostViewed) {
-      mostViewed = e.scores.week.views;
-      indexOfMostViewed = i;
-    }
-    // e[indexOfMostViewed].mostViewed = true;
-  });
-  return indexOfMostViewed;
-};
-
+//Append the most sold/bought item to the dom
 const appendMostBought = (mostBoughtItem) => {
   // create image element for most bought item
   const img = document.createElement("img");
@@ -121,14 +127,14 @@ const pageLoad = async () => {
   if (!getData) {
     return;
   }
-
   //find the most sold item
   const productArray = getData.data.products.products;
   const spliced = productArray.splice(getBestSeller(productArray), 1)[0];
 
-  //get most viewed item
-  const mostViewedIndex = getMostViews(productArray);
   appendMostBought(spliced);
+  //get most viewed item
+  mostViewedIndex = getMostViews(productArray);
+
   console.log(mostViewedIndex, "number of views index");
 
   $.each(productArray, function () {
@@ -147,16 +153,12 @@ const pageLoad = async () => {
         </a>
            <div class="product-info tooltip">
            
-            <span>${this.brand}</span>  
-            
+            <span>${this.brand}</span>              
             
             <span>${this.name}</span>
-            <span class="tooltiptext">${this.name}</span>
+            <span class="tooltiptext">${this.name}</span>            
             
-            
-            <span>€${this.price}</span>
-            
-            
+            <span>€${this.price}</span>     
             
          </div>
       </div>`;
@@ -171,7 +173,6 @@ const pageLoad = async () => {
         imagesLoaded: true,
         draggable: false,
         pageDots: false,
-        // adaptiveHeight: false,
         responsive: [
           {
             breakpoint: 480,
@@ -198,29 +199,5 @@ const pageLoad = async () => {
     });
   })(jQuery);
 };
-
-// .toString().replace(/\.00$/, "")
-// <span>€${this.price}</span>
-//  this.alternateImageUrls[0] || this.imageUrl
-//
-
-// $(".all-products").slick(HomeSliderSetting());
-// $.each(productArray, function () {
-//   const product = `<div class="wrapper">
-//     <a target="_blank" href= "${this.url}">
-//       <img alt=""
-//       src="${this.imageUrl}"
-//       onmouseover="this.src='${this.alternateImageUrls[0] || this.imageUrl}'"
-//       onmouseout="this.src='${this.imageUrl}'"
-//       onerror="this.src='./testimg/error.png'"/>
-//     </a>
-//       <div class="product-info">
-//         <span>${this.brand}</span>
-//         <span>${this.name}</span>
-//         <span>€${this.price.toString().replace(/\.00$/, "")}</span>
-//       </div>
-//   </div>`;
-//   $(".all-products").slick("slickAdd", product);
-// });
 
 pageLoad();
