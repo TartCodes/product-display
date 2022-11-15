@@ -34,7 +34,6 @@ const getMostViews = (items) => {
     //check if mostSold has value or if current element has a higher value in buys prop
     if (e.scores.week.views > mostViewed) {
       mostViewed = e.scores.week.views;
-
       indexOfMostViewed = i;
       mostViewedItem = e;
     }
@@ -134,11 +133,14 @@ const pageLoad = async () => {
   appendMostBought(spliced);
   //get most viewed item
   mostViewedIndex = getMostViews(productArray);
-
+  productArray[mostViewedIndex].mostViewed = true;
   console.log(mostViewedIndex, "number of views index");
 
   $.each(productArray, function () {
     const product = `<div class="carousel-cell">
+    <div class="most-viewed" style= "visibility:${
+      this.mostViewed ? "visible" : "hidden"
+    }">MOST VIEWED!</div>
         <a target="_blank" href= "${this.url}">
           <img alt=""
           id=""
@@ -152,6 +154,7 @@ const pageLoad = async () => {
           onerror="this.src='./testimg/error.png'"/>
         </a>
            <div class="product-info tooltip">
+
            
             <span>${this.brand}</span>              
             

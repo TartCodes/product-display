@@ -177,6 +177,7 @@ body,
   padding: 2px 0px;
   width: 55%;
   font-size: 2rem;
+  font-weight: 700;
 }
 
 /* All Products and Caro */
@@ -215,6 +216,22 @@ p {
   justify-content: center;
   flex-direction: column;
   /* min-height: 100%; */
+}
+
+/* Most Viewed Styling */
+
+.most-viewed {
+  z-index: 1;
+  position: absolute;
+  color: #edf7f5;
+  font-size: 2rem;
+  top: 17px;
+  /* display: none; */
+  border: 1px solid #18132c;
+  border-radius: 5px;
+  width: 10vw;
+  text-align: center;
+  background-color: #18132c;
 }
 
 /* cell images */
