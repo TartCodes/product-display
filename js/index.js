@@ -1,5 +1,5 @@
 class Page {
-  endpoint = "https://api.nosto.com/v1/graphql";
+  endpoint = "https://api.nosto.com/v1/graphql"; // usually would hide in an .env
 
   authKey = "N7QnHtiseaaAtartB16sQ7jUcNAm0HgsTxTnwTX08GQ85EYShd90zN3qiYiDjVsq"; // usually would hide in an .env
 
@@ -25,6 +25,7 @@ class Page {
         }
     `;
 
+  // named properties
   productArray;
   mostBoughtItem; //needs to have the spliced value
 
@@ -37,6 +38,7 @@ class Page {
         method: "POST",
         headers: {
           "Content-Type": "application/graphql",
+          //just a basic auth to provide a user name and pw when making a request - Base64 binary string
           Authorization: "Basic " + btoa(":" + this.authKey),
         },
       });
