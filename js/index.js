@@ -43,6 +43,7 @@ class Page {
         },
       });
       const data = await response.json();
+      //drilling down to product array
       this.productArray = data.data.products.products;
     } catch (err) {
       this.handleError();
@@ -51,19 +52,19 @@ class Page {
 
   // METHODS ------
 
-  //get most sold and views
+  //Gets most sold and views
   getBestSellerAndMostViewed() {
-    //init and object with values for return
+    //initialize object with values for return
     let mostViewed = 0,
       mostBought = 0,
       mostViewedIndex = 0,
       mostBoughtIndex = 0;
 
-    //loop each item in the array to replace values of vars tracking highest values
+    //loop each item in the array to replace values of variable while tracking highest values
     this.productArray.forEach((e, i) => {
       let currentViews = e.scores.week.views,
         currentBuys = e.scores.week.buys;
-
+      console.log(e.scores.week.views);
       if (currentViews > mostViewed) {
         mostViewed = currentViews;
         mostViewedIndex = i;
@@ -74,24 +75,39 @@ class Page {
       }
     });
     //if the index value of most bought is less than most viewed, subtract 1 from most viewed due to removing the most bought from the array later
-    mostViewedIndex =
-      mostBoughtIndex < mostViewedIndex ? mostViewedIndex - 1 : mostViewedIndex;
+    mostViewedIndex -=
+      //due to the splice moving the array over one, needed to -1 to have correctly display on the right item
+      mostBoughtIndex < mostViewedIndex ? 1 : 0;
+    //mostBoughtIndex < mostViewedIndex ? mostViewedIndex - 1 : mostViewedIndex;
+    //checking the most bought item and splicing it out (removing it out of the carosuel)
     this.mostBoughtItem = this.productArray.splice(
       this.productArray[mostBoughtIndex],
       1
-    )[0];
+    )[0]; // splice returns an array, set to 0 bc we are grabbing the 0 index
+
+    //adding the property of true to the mostviewed item to check it later
     this.productArray[mostViewedIndex].mostViewed = true;
   }
 
   //Append the most sold/bought item to the dom
   appendMostBought() {
+    //FORGOT TO ADD
+    //create the anchor tag
+    const anchor = document.createElement("a");
+    //set the href attribute for the link
+    anchor.setAttribute("href", this.mostBoughtItem.url);
+    anchor.id = "image-anchor";
+    //append it
+    document.getElementById("most-sold").appendChild(anchor);
+    // ---------------------- ///
     // create image element for most bought item
     const img = document.createElement("img");
     // insert src for img of most bought item
+
     img.src = this.mostBoughtItem.imageUrl;
     img.id = "most-sold-pic";
     //append img to DOM
-    document.getElementById("most-sold").appendChild(img);
+    document.getElementById("image-anchor").appendChild(img);
     const div = document.createElement("div");
     div.id = "best-text";
     div.innerHTML = "BEST SELLER THIS WEEK!";
@@ -102,7 +118,7 @@ class Page {
     });
   }
 
-  //handle errors
+  //handles the error if the fetch fails
   handleError() {
     //create h2 element
     const h2 = document.createElement("h2");
@@ -111,14 +127,14 @@ class Page {
     //append error to DOM
     document.getElementById("body").appendChild(h2);
   }
-}
+} //close of page class
 
-//Create the page
+//Create the page // Instantiating object with the class of page
 
 let newPage = new Page();
 
 const loadPage = async () => {
-  await newPage.getProducts();
+  await newPage.getProducts(); //calling functions, async so that the data can load before calling our methods
   newPage.getBestSellerAndMostViewed();
   newPage.appendMostBought();
 
@@ -147,13 +163,13 @@ const loadPage = async () => {
               <span>${this.name}</span>
               <span class="tooltiptext">${this.name}</span>
 
-              <span>€${String(this.price).replace(/\.00$/, "")}</span>
+              <span>€${String(this.price).replace(/\.00$/, "")}</span> 
 
            </div>
         </div>`;
     $(".all-products").append(product);
   });
-
+  // MODULE FOR REPSONSIVE
   (function ($) {
     $(document).ready(function () {
       $(".all-products").flickityResponsive({
